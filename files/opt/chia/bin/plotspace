@@ -30,9 +30,8 @@ def get_available_space():
         space_available = convert_to_gb(usage[3])
 
         # Don't use devices smaller than 1000GB, and only use devices with over
-        # 400GB available. This leaves the ~370GB required for plotting plus a
-        # small cushion.
-        if total_size > 1000 and space_available > 400:
+        # 500GB available.
+        if total_size > 1000 and space_available > 500:
             results.append(f"{space_available},{mountpoint}")
 
     return results
