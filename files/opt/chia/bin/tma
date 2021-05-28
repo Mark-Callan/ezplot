@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+target=${1:?"ERROR: First positional argument, \"target\" is required."}
+
+tmux attach-session -t ${target}
+

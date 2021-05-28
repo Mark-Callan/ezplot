@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+tmp_dir=${1:?"ERROR: First positional argument, tmp_dir is required."}
+dst_dir=${2:?"ERROR: Second positional argument, dst_dir is required."}
+
+NUM_THREADS_SSD=16
+NUM_THREADS_HDD=2
+num_threads=${NUM_THREADS_SSD}
+
+( \
+  (echo $tmp_dir | grep "/mnt/plot/disk") || \
+  (echo $tmp_dir | grep "/mnt/disk") \
+) \
+&& num_threads=${NUM_THREADS_HDD}
+
+echo "Using ${num_threads} threads"
+
+rm -f `find ${tmp_dir} -type f`
+
+chia plots create \
+  -n 25 \
+  -r ${num_threads} \
+  -b 15000 \
+  -t ${tmp_dir} \
+  -d ${dst_dir} ;
+

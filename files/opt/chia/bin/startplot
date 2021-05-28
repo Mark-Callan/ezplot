@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+for plotter in `cat $HOME/mining/plotters`; do
+  plot_name=`echo ${plotter} | cut -d',' -f1`
+  plot_tmp=`echo ${plotter} | cut -d',' -f2`
+  plot_dst=`echo ${plotter} | cut -d',' -f3`
+  set +e
+  eval "tmux new -s ${plot_name} -d 'plot \"${plot_tmp}\" \"${plot_dst}\"'"
+  error_code=$?
+  set -e
+  if [[ "$error_code" != "0" ]]; then
+    echo "[ERROR] unexpected exit code for plot ${plot_name}: ${error_code}"
+  else
+    echo "[`date`] Started plot: ${plotter}"
+  fi
+done
+
+tmux new -s iomonitor -d 'monitorio'
+

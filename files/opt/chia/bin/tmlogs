@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+num_lines=${1:-10}
+
+for t in `tml | cut -d':' -f1`; do 
+  
+  echo "---------- start pane: ${t} ----------" ; 
+  
+  tmux capture-pane -p -t ${t} | tail -n ${num_lines} ; 
+  
+  echo "---------- end: ${t} ----------" ; 
+
+done

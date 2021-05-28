@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+function start () {
+  exit_code=0
+  pushd $HOME/source/chia-blockchain/chia-blockchain-gui >>/dev/null
+     
+    set +e
+    . ../activate
+    npm run electron . 2> ${HOME}/.local/var/log/chia/gui.error.log 1> ${HOME}/.local/var/log/chia/gui.log
+    exit_code=$?
+    set -e
+  popd >> /dev/null
+  if [[ "${exit_code}" != "0" ]]; then
+    echo "ERROR: ${exit_code}" >> ${HOME}/.local/var/log/chia/gui.error.log
+  else
+    echo "Exited succesfully" >> ${HOME}/.local/var/log/chia/gui.log
+  fi
+  exit ${exit_code}
+}
+mkdir -p $HOME/.local/var/log/chia
+
+start & 
+

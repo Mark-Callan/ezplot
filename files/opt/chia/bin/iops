@@ -1,0 +1,66 @@
+#!/usr/bin/env python3.9
+
+from plumbum import local as sh
+from sys import argv
+
+human_readable = True if '-h' in argv else False
+
+def get_iostats():
+    iostats = sh['iostat']['-d']['-m']().strip().split('\n')
+
+    # Grab just the rows containing the stats.
+    iostats = iostats[3:]
+
+    results = []
+    for dev in iostats:
+        parts = list(filter(lambda p: p.strip(), dev.split(' ')))
+        results.append({
+            "device": parts[0],
+            "tps": int(float(parts[1])),
+            "readMB": float(parts[2]),
+            "writeMB": float(parts[3]),
+            "dscdMB": float(parts[4]),
+            "totalReadMB": float(parts[5]),
+            "totalWriteMB": float(parts[6]),
+            "totalDscdMB": float(parts[7])
+        })
+    return results
+
+def get_iosummary():
+    iostats = get_iostats()
+    return {
+        "tps": sum([int(float(d["tps"])) for d in iostats]),
+        "readMB": sum([float(d["readMB"]) for d in iostats]),
+        "writeMB": sum([float(d["writeMB"]) for d in iostats]),
+        "totalMB": sum([float(d["readMB"]) + float(d["writeMB"]) for d in iostats])
+    }
+
+def get_date():
+    date_cmd = sh['date']
+    if human_readable:
+        date_cmd = date_cmd['+%Y/%m/%d-%H:%M:%S']
+    else:
+        date_cmd = date_cmd['+%Y%m%d-%s']
+    return date_cmd().strip().split('-')[0:2]
+
+def main():
+    #iostats = get_iostats()
+    #total_read = sum([d["readMB"] for d in iostats])
+    #total_write = sum([d["writeMB"] for d in iostats])
+    #total_rw = total_read + total_write
+    #total_tps = sum([d["tps"] for d in iostats])
+    summary = get_iosummary()
+    date,time = get_date()
+    if human_readable:
+        print(f'date:    {date}')
+        print(f'time:    {time}')
+        print(f'tps:     {summary["tps"]}')
+        print(f'read:    {summary["readMB"]} MB/s')
+        print(f'write:   {summary["writeMB"]} MB/s')
+        print(f'r+w:     {summary["totalMB"]} MB/s')
+    else:
+        print(f'{date},{time},{summary["tps"]},{summary["readMB"]},{summary["writeMB"]},{summary["totalMB"]}')
+
+if __name__ == '__main__':
+    main()
+

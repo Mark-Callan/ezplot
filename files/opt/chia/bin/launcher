@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+import pathlib
+from sys import argv
+from plumbum import local as sh
+
+# This script should be in "${CHIA_HOME}/bin"
+CHIA_HOME = pathlib.Path(__file__).parent.parent.absolute()
+
+actions = {
+    "start": sh[f"{CHIA_HOME}/bin/startplot"],
+    "stop": sh[f"{CHIA_HOME}/bin/stopplot"],
+    "iops": sh[f"{CHIA_HOME}/bin/iops"],
+    "monitorio": sh[f"{CHIA_HOME}/bin/monitorio"],
+    "plot": sh[f"{CHIA_HOME}/bin/plot"],
+    "chia": sh[f"{CHIA_HOME}/bin/chia"],
+    "chia-gui": sh[f"CHIA_HOME/bin/chia"]
+}
+
+def main():
+    if len(argv) == 1:
+        print("\nsyntax:\n\tezplot <action> [args]")
+        available_actions = ", ".join(actions.keys())
+        print(f"\navailable actions:\n\t{available_actions}\n")
+        exit()
+
+    command = actions[argv[1]]
+    if len(argv) > 2:
+        for arg in argv[2:]:
+            command = command[arg]
+    from plumbum import FG
+    command & FG
+
+if __name__ == '__main__':
+    main()

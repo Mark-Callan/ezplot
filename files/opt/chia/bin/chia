@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+CHIA_GIT_URL=https://github.com/Chia-Network/chia-blockchain.git
+CHIA_SOURCE="${CHIA_SOURCE:-"${CHIA_HOME}/source/chia-blockchain"}"
+
+
+
+if [[ ! -d "$CHIA_SOURCE" ]]; then
+  echo "Pulling chia-blockchain source: "
+  source_dir="`dirname $CHIA_SOURCE`"
+  echo "Source directory ${source_dir}"
+  (mkdir -p $source_dir ; cd $source_dir ; git clone $CHIA_GIT_URL)
+fi
+if [[ ! -f "${CHIA_SOURCE}/activate" ]]; then
+  echo "Setting up chia environment"
+  (cd ${CHIA_SOURCE} && sh ./install.sh)
+fi
+
+pushd ${CHIA_SOURCE} >> /dev/null
+  set +e
+  . ./activate
+  exit_code=$?
+  set -e
+popd >> /dev/null
+
+if [[ "$exit_code" != "0" ]]; then
+  echo "[`date`] Error activating chia environment: $exit_code"
+fi
+
+set +e
+chia $* 
+set -e
+
+deactivate 2>&1>>/dev/null || true
+
