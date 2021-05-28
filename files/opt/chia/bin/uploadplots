@@ -12,17 +12,17 @@ pushd ${sync_dir} >> /dev/null
   if [ `find ./ -maxdepth 1 -type f -name "*.plot" | wc -l` != 0 ]; then
     for f in `find ./ -maxdepth 1 -type f -name "*.plot"`; do
       mv ${f} ./copying/
-      
+
       for file in `find ./copying -type f -name "*.plot"`; do
         # Copy with scp so we can see the rate at which we copy.
         echo "[`date`] transfering plot: ${file}"
         scp -i ~/.ssh/id_rsa ${file} ${sync_to}
+        rsync -avhp -e "ssh -i ~/.ssh/id_rsa" --remove-source-files ${file} ${sync_to}
       done
-      # Follow up with rsync to verify the transfer and clean out the 
+      # Follow up with rsync to verify the transfer and clean out the
       # source file.
-      rsync -avhp -e "ssh -i ~/.ssh/id_rsa" --remove-source-files ./copying/ ${sync_to}
+      rsync -avhp -e "ssh -i ~/.ssh/id_rsa" --remove-source-files ./copying ${sync_to}
     done
   fi
 
 popd >> /dev/null
-
