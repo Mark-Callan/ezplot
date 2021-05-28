@@ -39,7 +39,11 @@ def get_available_space():
 
 def main():
   disk_space = get_available_space()
-  for u in sorted(disk_space, key=lambda disk: float(disk.split(',')[0])):
+  if sort_percent:
+      sorted_list = sorted(disk_space, key=lambda disk: int(disk.split(',')[2][:-1]))
+  else:
+      sorted_list = sorted(disk_space, key=lambda disk: float(disk.split(',')[0]))
+  for u in sorted_list:
     print(u)
 
 if __name__ == '__main__':
