@@ -11,17 +11,36 @@ actions = {
     "start": sh[f"{CHIA_HOME}/bin/startplot"],
     "stop": sh[f"{CHIA_HOME}/bin/stopplot"],
     "iops": sh[f"{CHIA_HOME}/bin/iops"],
-    "monitorio": sh[f"{CHIA_HOME}/bin/monitorio"],
+    "io": sh[f"{CHIA_HOME}/bin/monitorio"],
+    "plotspace": sh[f"{CHIA_HOME}/bin/plotspace"],
+    "plotdst": sh[f"{CHIA_HOME}/bin/plotdst"],
     "plot": sh[f"{CHIA_HOME}/bin/plot"],
     "chia": sh[f"{CHIA_HOME}/bin/chia"],
-    "chia-gui": sh[f"CHIA_HOME/bin/chia"]
+    "chia-gui": sh[f"{CHIA_HOME}/bin/chia"],
+    "logs": sh[f"{CHIA_HOME}/bin/tmlogs"]
+}
+
+descriptions = {
+    "start": "Start plotters, remote sync, io monitor and plot count mounter.",
+    "stop": "Stops plotters",
+    "iops": "Shows combined io stats for all drives. -h for human output.",
+    "io": "Starts the io monitor",
+    "plotspace": "Lists mount points and their available drive space sorted in ascending order.",
+    "plotdst": "Selects the best plot destination directory based on available space.",
+    "plot": "Starts a plotter using the given tmp dir, and using plotdst to get the destination.",
+    "chia": "Wrapper for chia-blockchain that automatically retrieves and sets up the virtual environment.",
+    "chia-gui": "Sets up and launches the chia-gui",
+    "logs": "Gets the last n lines of logs for each of the tmux sessions."
 }
 
 def main():
     if len(argv) == 1:
         print("\nsyntax:\n\tezplot <action> [args]")
-        available_actions = ", ".join(actions.keys())
-        print(f"\navailable actions:\n\t{available_actions}\n")
+        print("\navailable actions:\n")
+        placeholder = "          "
+        for action in actions.keys():
+            padded = action + placeholder[:-len(action)]
+            print(f"  {padded}  {descriptions[action]}\n")
         exit()
 
     command = actions[argv[1]]

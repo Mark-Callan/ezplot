@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Get the plot destination with the most space.
+echo `plotspace | tail -n 1 | cut -d',' -f2`/farm

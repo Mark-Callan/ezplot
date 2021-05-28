@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+from sys import argv
+
+from plumbum import local as sh
+
+
+def convert_to_gb(space):
+    if space.endswith('T'):
+        space = float(space[:-1]) * 1024
+    elif space.endswith('G'):
+        space = float(space[:-1])
+    elif space.endswith('M'):
+        space = float(space[:-1]) / 1024
+    elif space.endswith('K'):
+        space = float(space[:-1]) / 1024 / 1024
+    else:
+        space = 0.0
+    return space
+
+
+def get_available_space():
+    fs_usage = sh['sudo']['df']['-h']().strip().split('\n')
+    results = []
+    for usage in fs_usage:
+        usage = usage.split(' ')
+        usage = list(filter(lambda u: u, usage))
+        mountpoint = usage[5]
+        total_size = convert_to_gb(usage[1])
+        space_available = convert_to_gb(usage[3])
+
+        # Don't use devices smaller than 1000GB, and only use devices with over
+        # 400GB available. This leaves the ~370GB required for plotting plus a
+        # small cushion.
+        if total_size > 1000 and space_available > 400:
+            results.append(f"{space_available},{mountpoint}")
+
+    return results
+
+
+def main():
+  disk_space = get_available_space()
+  for u in sorted(disk_space, key=lambda disk: float(disk.split(',')[0])):
+    print(u)
+
+if __name__ == '__main__':
+  main()

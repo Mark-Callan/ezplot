@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+while [ 0 ]; do
+  find /mnt/disk/ -name "*.plot" -type f | wc -l | tee -a ~/.local/var/log/plots.log
+  sleep 10
+done

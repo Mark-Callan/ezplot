@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+while [ 0 ]; do
+
+  for disk in disk4 disk5 disk6 disk7 disk8 disk9 disk10 disk11; do
+    echo "[`date`] Backing up to 10.0.0.31:/mnt/disk/${disk}/farm"
+    for dir in `cat ~/mining/backup`; do
+      set +e
+      echo "[`date`] Backing up ${dir} to ${disk}"
+      uploadplots ${dir} 10.0.0.31:/mnt/disk/${disk}/farm || (echo "Sync existed with a non-zero exit code $?" ; sleep 10)
+      set -e
+    done
+
+    echo "[`date`] Sleeping for 5m"
+    sleep 300
+
+  done
+
+done
+

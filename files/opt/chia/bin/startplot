@@ -15,5 +15,5 @@ for plotter in `cat $HOME/mining/plotters`; do
   fi
 done
 
-tmux new -s iomonitor -d 'monitorio'
-
+tmux new -s monitorio -d 'monitorio'
+tmux new -s monitorplots -d 'monitorplots'

@@ -3,24 +3,47 @@
 tmp_dir=${1:?"ERROR: First positional argument, tmp_dir is required."}
 dst_dir=${2:?"ERROR: Second positional argument, dst_dir is required."}
 
-NUM_THREADS_SSD=16
-NUM_THREADS_HDD=2
-num_threads=${NUM_THREADS_SSD}
+# 8 is probably overkill. Anything past 5 doesn't seem to improve plot speed.
+THREADS_SSD=8
+THREADS_HDD=2
+# I tried doubling this, and it wasn't faster.
+BUFFER_SSD=7000
+BUFFER_HDD=3500
 
-( \
-  (echo $tmp_dir | grep "/mnt/plot/disk") || \
-  (echo $tmp_dir | grep "/mnt/disk") \
-) \
-&& num_threads=${NUM_THREADS_HDD}
+threads=${NUM_THREADS_SSD}
+buffer=${MEMORY_SSD}
+if [[ `echo $tmp_dir | grep "/mnt/plot/disk"` || `echo $tmp_dir | grep "/mnt/disk"` ]]; then
+  threads=${NUM_THREADS_HDD}
+  buffer=${MEMORY_HDD}
+fi
 
-echo "Using ${num_threads} threads"
-
+# Clear any existing tmp files from previous plot attempts.
 rm -f `find ${tmp_dir} -type f`
 
-chia plots create \
-  -n 25 \
-  -r ${num_threads} \
-  -b 15000 \
-  -t ${tmp_dir} \
-  -d ${dst_dir} ;
+echo "threads: ${threads}, buffer: ${buffer}"
+while [ 0 ]; do
+  # Gets the disk with the most space available.
+  dst_dir=`plotdst`
 
+  echo "[`date`] starting plot: ${tmp_dir} => $dst_dir"
+  start=`date +%s`
+  set +e
+  echo chia plots create \
+    -n 1 \
+    -r ${threads} \
+    -b ${buffer} \
+    -t ${tmp_dir} \
+    -d ${dst_dir} ;
+  set -e
+  sleep 5
+  end=`date +%s`
+
+  exit_code=$?
+  if [ $exit_code -gt 0 ]; then
+    echo "[`date`] ERROR: Plot failed with exit code: ${exit_code}"
+  else
+    echo ${tmp_dir},${dst_dir},${start},${end},`expr $end - $start` | tee -a ~/.local/var/log/plot.log
+  fi
+
+  sleep 10
+done
