@@ -4,6 +4,7 @@ from sys import argv
 
 from plumbum import local as sh
 
+sort_percent = True if "--percent" in argv else False
 
 def convert_to_gb(space):
     if space.endswith('T'):
@@ -17,7 +18,6 @@ def convert_to_gb(space):
     else:
         space = 0.0
     return space
-
 
 def get_available_space():
     fs_usage = sh['sudo']['df']['-h']().strip().split('\n')
@@ -36,7 +36,6 @@ def get_available_space():
             results.append(f"{space_available},{mountpoint},{percent_used}")
 
     return results
-
 
 def main():
   disk_space = get_available_space()
