@@ -1,1 +1,8 @@
-nvme0,/mnt/plot/nvme0/plot,/mnt/disk/disk0/farm
+nvme0,/mnt/plot/nvme0/plot,/data/store01/farm
+ssd_raid0,/mnt/plot/ssd_raid0/plot,/data/store01/farm
+disk_raid10,/mnt/plot/disk_raid10/plot,/data/store01/farm
+disk0,/mnt/plot/disk0/plot,/mnt/plot/disk_raid10/farm
+disk1,/mnt/plot/disk1/plot,/mnt/plot/disk_raid10/farm
+disk2,/mnt/plot/disk2/plot,/mnt/plot/disk_raid10/farm
+disk3,/mnt/plot/disk3/plot,/mnt/plot/disk_raid10/farm
+disk4,/mnt/plot/disk4/plot,/mnt/plot/disk_raid10/farm
