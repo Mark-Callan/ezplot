@@ -23,7 +23,7 @@ rm -f `find ${tmp_dir} -type f`
 echo "threads: ${threads}, buffer: ${buffer}"
 while [ 0 ]; do
   # Gets the disk with the most space available.
-  dst_dir=`plotdst`
+  dst_dir=`ezplot plotdst`
 
   echo "[`date`] starting plot: ${tmp_dir} => $dst_dir"
   start=`date +%s`

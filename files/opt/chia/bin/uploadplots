@@ -14,14 +14,15 @@ pushd ${sync_dir} >> /dev/null
       mv ${f} ./copying/
 
       for file in `find ./copying -type f -name "*.plot"`; do
+        sync_dst=`ssh ${sync_to} ezplot plotdst`
         # Copy with scp so we can see the rate at which we copy.
         echo "[`date`] transfering plot: ${file}"
-        scp -i ~/.ssh/id_rsa ${file} ${sync_to}
-        rsync -avhp -e "ssh -i ~/.ssh/id_rsa" --remove-source-files ${file} ${sync_to}
+        scp -i ~/.ssh/id_rsa ${file} ${sync_to}:${sync_dst}
+        rsync -avhp -e "ssh -i ~/.ssh/id_rsa" --remove-source-files ${file} ${sync_to}:${sync_dst}
       done
       # Follow up with rsync to verify the transfer and clean out the
       # source file.
-      rsync -avhp -e "ssh -i ~/.ssh/id_rsa" --remove-source-files ./copying ${sync_to}
+      rsync -avhp -e "ssh -i ~/.ssh/id_rsa" --remove-source-files ./copying ${sync_to}:`ssh -i ~/.ssh/id_rsa ${sync_to} ezplot plotdst`
     done
   fi
 
