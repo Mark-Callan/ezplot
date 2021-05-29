@@ -5,7 +5,7 @@ for plotter in `cat $HOME/mining/plotters`; do
   plot_tmp=`echo ${plotter} | cut -d',' -f2`
   plot_dst=`echo ${plotter} | cut -d',' -f3`
   set +e
-  eval "tmux new -s ${plot_name} -d 'plot \"${plot_tmp}\" \"${plot_dst}\"'"
+  eval "tmux new -s ${plot_name} -d 'ezplot plot \"${plot_tmp}\" \"${plot_dst}\"'"
   error_code=$?
   set -e
   if [[ "$error_code" != "0" ]]; then
@@ -15,5 +15,5 @@ for plotter in `cat $HOME/mining/plotters`; do
   fi
 done
 
-tmux new -s monitorio -d 'monitorio'
-tmux new -s monitorplots -d 'monitorplots'
+tmux new -s monitorio -d 'ezplot io'
+tmux new -s monitorplots -d 'ezplot monitor'

@@ -18,7 +18,8 @@ actions = {
     "chia": sh[f"{CHIA_HOME}/bin/chia"],
     "chia-gui": sh[f"{CHIA_HOME}/bin/chia"],
     "logs": sh[f"{CHIA_HOME}/bin/tmlogs"],
-    "env": (sh['env'] | sh['grep']['CHIA_'])
+    "env": (sh['env'] | sh['grep']['CHIA_']),
+    "monitor": sh[f"{CHIA_HOME}/bin/monitorplots"]
 }
 
 descriptions = {
@@ -32,7 +33,8 @@ descriptions = {
     "chia": "Wrapper for chia-blockchain that automatically retrieves and sets up the virtual environment.",
     "chia-gui": "Sets up and launches the chia-gui",
     "logs": "Gets the last n lines of logs for each of the tmux sessions.",
-    "env": "Prints the CHIA related environment variables."
+    "env": "Prints the CHIA related environment variables.",
+    "monitor": "Starts the plot count monitor."
 }
 
 def main():
