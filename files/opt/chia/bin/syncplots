@@ -2,7 +2,7 @@
 
 while [ 0 ]; do
 
-  for dir in `cat ~/mining/backup`; do
+  for dir in `cat ${CHIA_SYNCSRC}`; do
     for dst in `cat ${CHIA_SYNCDST}`; do
       set +e
       echo "[`date`] Backing up ${dir} to ${dst}"
