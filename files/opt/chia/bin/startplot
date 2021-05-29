@@ -15,5 +15,7 @@ for plotter in `cat $HOME/mining/plotters`; do
   fi
 done
 
+set +e
 tmux new -s monitorio -d 'ezplot io'
 tmux new -s monitorplots -d 'ezplot monitor'
+set -e
