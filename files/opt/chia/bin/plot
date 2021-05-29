@@ -10,11 +10,11 @@ THREADS_HDD=2
 BUFFER_SSD=7000
 BUFFER_HDD=3500
 
-threads=${NUM_THREADS_SSD}
-buffer=${MEMORY_SSD}
+threads=${THREADS_SSD}
+buffer=${BUFFER_SSD}
 if [[ `echo $tmp_dir | grep "/mnt/plot/disk"` || `echo $tmp_dir | grep "/mnt/disk"` ]]; then
-  threads=${NUM_THREADS_HDD}
-  buffer=${MEMORY_HDD}
+  threads=${THREADS_HDD}
+  buffer=${BUFFER_HDD}
 fi
 
 # Clear any existing tmp files from previous plot attempts.
