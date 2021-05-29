@@ -9,3 +9,4 @@ install:
 config:
 	mkdir -p ~/.local/opt/chia/config
 	cp $(shell find ./config -type f) ~/.local/opt/chia/config/
+
