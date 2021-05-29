@@ -8,7 +8,7 @@ while [ 0 ]; do
       ezplot uploadplots ${dir} ${dst} || (echo "Sync existed with a non-zero exit code $?" ; sleep 10)
       set -e
     done
-    echo "[`date`] Sleeping for 5m"
-    sleep 300
   done
+  echo "[`date`] Sleeping for 5m"
+  sleep 300
 done
