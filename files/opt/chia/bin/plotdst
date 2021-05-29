@@ -11,6 +11,7 @@ if [[ `cat /tmp/ezplot/dsts | wc -l` == 0 ]]; then
   plotspace > /tmp/ezplot/dsts
 fi
 
+
 next_dst=`cat /tmp/ezplot/dsts | tail -n 1`
 sed -i '$ d' /tmp/ezplot/dsts
 echo $next_dst
