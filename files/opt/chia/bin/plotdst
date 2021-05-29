@@ -1,4 +1,16 @@
 #!/usr/bin/env bash
 
+mkdir -p /tmp/ezplot/
+
 # Get the plot destination with the most space.
-echo `plotspace | tail -n 1 | cut -d',' -f2`/farm
+if [[ ! -f "/tmp/ezplot/dsts" ]]; then
+  touch /tmp/ezplot/dsts
+fi
+
+if [[ `cat /tmp/ezplot/dsts | wc -l` == 0 ]]; then
+  plotspace > /tmp/ezplot/dsts
+fi
+
+next_dst=`cat /tmp/ezplot/dsts | tail -n 1`
+sed -i '$ d' /tmp/ezplot/dsts
+echo $next_dst
