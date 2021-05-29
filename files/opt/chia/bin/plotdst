@@ -12,6 +12,6 @@ if [[ `cat /tmp/ezplot/dsts | wc -l` == 0 ]]; then
 fi
 
 
-next_dst=`cat /tmp/ezplot/dsts | tail -n 1`
+next_dst=`cat /tmp/ezplot/dsts | tail -n 1 | cut -d',' -f2`
 sed -i '$ d' /tmp/ezplot/dsts
-echo $next_dst | cut -d',' -f2
+echo "${next_dst}/farm
