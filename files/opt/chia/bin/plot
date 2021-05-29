@@ -28,7 +28,7 @@ while [ 0 ]; do
   echo "[`date`] starting plot: ${tmp_dir} => $dst_dir"
   start=`date +%s`
   set +e
-  echo chia plots create \
+  echo ezplot chia plots create \
     -n 1 \
     -r ${threads} \
     -b ${buffer} \

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-for plotter in `cat ~/mining/plotters`; do 
+for plotter in `cat ${CHIA_HOME}/config/plotters`; do
   set +e
   plot_name=`echo $plotter | cut -d',' -f1`
   tmux kill-session -t ${plot_name}
