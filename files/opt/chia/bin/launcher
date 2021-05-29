@@ -19,7 +19,8 @@ actions = {
     "chia-gui": sh[f"{CHIA_HOME}/bin/chia"],
     "logs": sh[f"{CHIA_HOME}/bin/tmlogs"],
     "env": (sh['env'] | sh['grep']['CHIA_']),
-    "monitor": sh[f"{CHIA_HOME}/bin/monitorplots"]
+    "monitor": sh[f"{CHIA_HOME}/bin/monitorplots"],
+    "sync": sh[f"{CHIA_HOME}/bin/syncplots"]
 }
 
 descriptions = {
@@ -34,7 +35,8 @@ descriptions = {
     "chia-gui": "Sets up and launches the chia-gui",
     "logs": "Gets the last n lines of logs for each of the tmux sessions.",
     "env": "Prints the CHIA related environment variables.",
-    "monitor": "Starts the plot count monitor."
+    "monitor": "Starts the plot count monitor.",
+    "sync": "Syncs the locally generated plots to the configured remote location."
 }
 
 def main():

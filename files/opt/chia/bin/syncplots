@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+# Bail if there isn't anything to sync.
+([[ -f ${CHIA_SYNCDST} ]] && [[ -f ${CHIA_SYNCSRC} ]]) || exit 1
 
 while [ 0 ]; do
-
   for dir in `cat ${CHIA_SYNCSRC}`; do
     for dst in `cat ${CHIA_SYNCDST}`; do
       set +e
