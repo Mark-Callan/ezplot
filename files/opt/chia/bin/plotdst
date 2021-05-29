@@ -14,4 +14,4 @@ fi
 
 next_dst=`cat /tmp/ezplot/dsts | tail -n 1 | cut -d',' -f2`
 sed -i '$ d' /tmp/ezplot/dsts
-echo "${next_dst}/farm
+echo "${next_dst}/farm"
