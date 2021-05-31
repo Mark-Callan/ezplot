@@ -6,12 +6,12 @@ while [ 0 ]; do
   least_space=`ezplot plotspace --syncsrc | head -n 1`
   most_space=`ezplot plotspace --syncsrc | tail -n 1`
 
-  least_percent=`echo ${least_space} | cut -d',' -f3`
-  most_percent=`echo ${most_percent} | cut -d',' -f3`
+  least_percent=`echo ${least_space} | cut -d',' -f3 | sed -e 's,%,,g'`
+  most_percent=`echo ${most_space} | cut -d',' -f3 | sed -e 's,%,,g'`
   diff_percent=`expr "${least_percent}" - "${most_percent}"`
   if [[ ${diff_percent} -gt 5 ]]; then
-    least_mnt=`echo ${least_space} | cut -d',' -f1`
-    most_mnt=`echo ${most_space} | cut -d',' -f1`
+    least_mnt=`echo ${least_space} | cut -d',' -f2`
+    most_mnt=`echo ${most_space} | cut -d',' -f2`
     echo "[`date`] rebalancing: ${least_mnt} => ${most_mnt}"
     echo "(cd ${least_mnt}/farm ; mv `ls . | head -n 1` ${most_mnt}/farm/)"
   fi
