@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from os import environment as ENV
+from os import environ as ENV
 from sys import argv
 from sys import en
 
