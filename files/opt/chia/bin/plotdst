@@ -14,4 +14,9 @@ fi
 next=`cat /tmp/ezplot/dsts | tail -n 1`
 next_dst=`echo ${next} | cut -d',' -f2`
 sed -i '$ d' /tmp/ezplot/dsts
+
+if [[ "${next_dst}/farm" == "/farm" ]]; then
+  echo "[`date`] ERROR: No available destinations found. Possibly out of space."
+  exit 1
+fi
 echo "${next_dst}/farm"

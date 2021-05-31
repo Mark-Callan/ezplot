@@ -5,6 +5,12 @@ from sys import argv
 from plumbum import local as sh
 
 sort_percent = True if "--percent" in argv else False
+all = True if "--all" in argv or "-a" in argv else False
+# If we want to list only the syncsrc dirs.
+syncsrc = True if "--syncsrc" in argv else False
+src_dirs = []
+if syncsrc:
+    src_dirs = sh['cat']['~/.local/opt/chia/config/syncsrc']().strip().split('\n')
 
 def convert_to_gb(space):
     if space.endswith('T'):
@@ -22,6 +28,7 @@ def convert_to_gb(space):
 def get_available_space():
     fs_usage = sh['sudo']['df']['-h']().strip().split('\n')
     results = []
+
     for usage in fs_usage:
         usage = usage.split(' ')
         usage = list(filter(lambda u: u, usage))
@@ -30,10 +37,12 @@ def get_available_space():
         space_available = convert_to_gb(usage[3])
         percent_used = usage[4]
 
-        # Don't use devices smaller than 1000GB, and only use devices with over
-        # 500GB available.
-        if total_size > 1000 and space_available > 500:
+        if syncsrc:
+            if len(list(filter(lambda f: f.startswith(mountpoint), src_dirs))) > 0:
+                results.append(f"{space_available},{mountpoint},{percent_used}")
+        elif all or (total_size > 1000 and space_available > 500):
             results.append(f"{space_available},{mountpoint},{percent_used}")
+
 
     return results
 
