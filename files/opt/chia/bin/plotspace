@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
+from os import environment as ENV
 from sys import argv
+from sys import en
 
 from plumbum import local as sh
 
@@ -10,7 +12,7 @@ all = True if "--all" in argv or "-a" in argv else False
 syncsrc = True if "--syncsrc" in argv else False
 src_dirs = []
 if syncsrc:
-    src_dirs = sh['cat']['~/.local/opt/chia/config/syncsrc']().strip().split('\n')
+    src_dirs = sh['cat'][ENV["CHIA_SYNCSRC"]]().strip().split('\n')
 
 def convert_to_gb(space):
     if space.endswith('T'):
