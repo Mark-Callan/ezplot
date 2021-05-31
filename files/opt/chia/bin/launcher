@@ -21,7 +21,8 @@ actions = {
     "env": (sh['env'] | sh['grep']['CHIA_']),
     "monitor": sh[f"{CHIA_HOME}/bin/monitorplots"],
     "sync": sh[f"{CHIA_HOME}/bin/syncplots"],
-    "uploadplots": sh[f"{CHIA_HOME}/bin/uploadplots"]
+    "uploadplots": sh[f"{CHIA_HOME}/bin/uploadplots"],
+    "rebalance": sh[f"{CHIA_HOME}/bin/rebalance"]
 }
 
 descriptions = {
@@ -38,7 +39,8 @@ descriptions = {
     "env": "Prints the CHIA related environment variables.",
     "monitor": "Starts the plot count monitor.",
     "sync": "Syncs the locally generated plots to the configured remote location.",
-    "uploadplots": "Used by sync"
+    "uploadplots": "Used by sync",
+    "rebalance": "Starts a rebalancer that continuously moves plots if the difference in balance between drives exceeds N percent."
 }
 
 def main():
