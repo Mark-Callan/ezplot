@@ -24,6 +24,7 @@ if [ -f /${CHIA_SYNCSRC} ]; then
   echo "[`date`] Starting plot sync"
   index=0
   for dir in `cat ${CHIA_SYNCSRC}`; do
+    echo "[`date`] Starting sync for source dir: ${dir}"
     tmux new -s syncplots_${index} -d "ezplot sync ${dir}"
     index=`expr "${index}" + "1"`
   done
