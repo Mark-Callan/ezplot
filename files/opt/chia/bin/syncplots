@@ -5,8 +5,8 @@ sync_src=${1:?"ERROR: A local sync source location must be provided."}
 while [ 0 ]; do
   for dst in `cat ${CHIA_SYNCDST}`; do
     set +e
-    echo "[`date`] Backing up ${dir} to ${dst}"
-    ezplot uploadplots ${dir} ${dst} || (echo "Sync existed with a non-zero exit code $?" ; sleep 10)
+    echo "[`date`] Backing up ${sync_src} to ${dst}"
+    ezplot uploadplots ${sync_src} ${dst} || (echo "Sync existed with a non-zero exit code $?" ; sleep 10)
     set -e
   done
   echo "[`date`] Sleeping for 5m"
