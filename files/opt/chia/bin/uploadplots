@@ -23,9 +23,10 @@ pushd ${sync_dir} >> /dev/null
   #
   rm -rf /tmp${sync_dir}
 
-  new_plots=/tmp${sync_dir}/plots
-  copying_plots=${new_plots}/copying/plots
-  
+  plots_tmp=/tmp${sync_dir}
+  new_plots=${plots_tmp}/plots.list
+  copying_plots=${plots_tmp}/copying/plots.list
+
   mkdir -p `dirname ${new_plots}` `dirname ${copying_plots}`
   touch ${new_plots} ${copying_plots}
 
