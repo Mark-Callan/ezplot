@@ -22,7 +22,7 @@ pushd ${sync_dir} >> /dev/null
   # location, then removed from local storage.
   #
 
-  new_plots=/tmp/${sync_dir}/farm
+  new_plots=/tmp${sync_dir}
   copying_plots=${new_plots}/copying
   mkdir -p `dirname ${new_plots}` `dirname ${copying_plots}`
 
@@ -53,7 +53,7 @@ pushd ${sync_dir} >> /dev/null
     sync_dst=`ssh ${sync_to} ezplot plotdst`
     # Copy with scp so we can see the rate at which we copy.
     echo "[`date`] transfering plot: ${file} => ${sync_dst}"
-    #scp -i ~/.ssh/id_rsa ${file} ${sync_to}:${sync_dst}
+    scp -i ~/.ssh/id_rsa ${file} ${sync_to}:${sync_dst}
     rsync -avhp -e "ssh -i ~/.ssh/id_rsa" --remove-source-files \
       ${file} ${sync_to}:${sync_dst}
   done
