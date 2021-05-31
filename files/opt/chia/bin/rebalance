@@ -13,7 +13,7 @@ while [ 0 ]; do
     least_mnt=`echo ${least_space} | cut -d',' -f2`
     most_mnt=`echo ${most_space} | cut -d',' -f2`
     echo "[`date`] rebalancing: ${least_mnt} => ${most_mnt}"
-    echo "(cd ${least_mnt}/farm ; mv `ls . | head -n 1` ${most_mnt}/farm/)"
+    echo "mv `find ${least_mnt}/farm -maxdepth 1 -type f -name "*.plot" | head -n 1` ${most_mnt}/farm/"
   fi
   echo "[`date`] Sleeping for a minute."
   sleep 60
