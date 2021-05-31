@@ -24,6 +24,7 @@ pushd ${sync_dir} >> /dev/null
 
   new_plots=/tmp/${sync_dir}/farm
   copying_plots=${new_plots}/copying
+  mkdir -p `dirname ${new_plots}` `dirname ${copying_plots}`
 
   echo "[`date`] Checking for new plots..."
   find ./ -maxdepth 1 -type f -name "*.plot" | tee ${new_plots}
