@@ -9,7 +9,7 @@ while [ 0 ]; do
   least_percent=`echo ${least_space} | cut -d',' -f3`
   most_percent=`echo ${most_percent} | cut -d',' -f3`
   diff_percent=`expr "${lease_percent}" - "${most_percent}"`
-  if [ $diff_percent -gt 5 ]; then
+  if [[ ${diff_percent} -gt 5 ]]; then
     least_mnt=`echo ${least_space} | cut -d',' -f1`
     most_mnt=`echo ${most_space} | cut -d',' -f1`
     echo "[`date`] rebalancing: ${least_mnt} => ${most_mnt}"
