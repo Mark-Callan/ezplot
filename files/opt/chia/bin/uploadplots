@@ -31,16 +31,23 @@ pushd ${sync_dir} >> /dev/null
   echo "[`date`] Checking for plots being copied..."
   find ./copying -maxdepth 1 -type f -name "*.plot" | tee ${copying_plots}
 
-  if [ `cat ${copying_plots} | wc -l` == 0 && `cat ${new_plots} | wc -l` != 0 ]; then
-    for f in `find ./ -maxdepth 1 -type f -name "*.plot"`; do
-      echo "[`date`] Moving ${f} to copy directory."
-      mv ${f} ./copying/
-    done
+  # If there are no plots marked for copy atm.
+  if [ `cat ${copying_plots} | wc -l` == 0 ]; then
+    # If there are new plots ready to be copied.
+    if [ `cat ${new_plots} | wc -l` != 0 ]; then
+      # Iterate the list of new plots
+      for f in `find ./ -maxdepth 1 -type f -name "*.plot"`; do
+        echo "[`date`] Moving ${f} to copy directory."
+        mv ${f} ./copying/
+      done
+    fi
   fi
 
-
+  # Refresh the list of plots to be copied.
   echo "[`date`] Checking for plots to be copied..."
   find ./copying -maxdepth 1 -type f -name "*.plot" | tee ${copying_plots}
+
+  # Upload the plots to the remote location.
   for file in `cat ${copying_plots}`; do
     sync_dst=`ssh ${sync_to} ezplot plotdst`
     # Copy with scp so we can see the rate at which we copy.
