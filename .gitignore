@@ -1,4 +1,4 @@
 **/*.swp
 tmp/*
 files/opt/chia/source/chia-blockchain
-
+config/*
