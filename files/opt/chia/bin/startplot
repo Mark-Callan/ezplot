@@ -28,5 +28,12 @@ if [ -f /${CHIA_SYNCSRC} ]; then
     tmux new -s syncplots_${index} -d "ezplot sync ${dir}"
     index=`expr "${index}" + "1"`
   done
+
+  # Then this is probably a dedicated storage node.
+  if [ ! -f ${CHIA_SYNCDST} ]; then
+    echo "[`date`] Starting rebalancer"
+    tmux new -s rebalancer -d "ezplot rebalance"
+  fi
+
 fi
 set -e
