@@ -21,9 +21,9 @@ pushd ${sync_dir} >> /dev/null
   # Files in the sync dir are then sync'd to the remote
   # location, then removed from local storage.
   #
-
-  new_plots=/tmp${sync_dir}
-  copying_plots=${new_plots}/copying
+  rm -rf /tmp${sync_dir}
+  new_plots=/tmp${sync_dir}/plots
+  copying_plots=${new_plots}/copying/plots
   mkdir -p `dirname ${new_plots}` `dirname ${copying_plots}`
 
   echo "[`date`] Checking for new plots..."
