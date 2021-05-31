@@ -5,6 +5,7 @@ install: files ezplot
 files:
 	mkdir -p $(HOME)/.local/
 	cp -R ./files/* $(HOME)/.local
+	chmod +x ~/.local/opt/chia/bin/*
 
 ezplot: $(HOME)/.local/bin/ezplot
 $(HOME)/.local/bin/ezplot:
