@@ -22,9 +22,12 @@ pushd ${sync_dir} >> /dev/null
   # location, then removed from local storage.
   #
   rm -rf /tmp${sync_dir}
+
   new_plots=/tmp${sync_dir}/plots
   copying_plots=${new_plots}/copying/plots
+  
   mkdir -p `dirname ${new_plots}` `dirname ${copying_plots}`
+  touch ${new_plots} ${copying_plots}
 
   echo "[`date`] Checking for new plots..."
   find ./ -maxdepth 1 -type f -name "*.plot" | tee ${new_plots}
