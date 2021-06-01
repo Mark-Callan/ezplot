@@ -1,22 +1,20 @@
 # EZ Plots fo' dat EZ muney.
 
+Just cause its jank, don't mean it ain't dank.
+
 ## Config.
 
 There are three configs.
- - chia
+ - environment
  - plotters
- - sync
+ - syncsrc
+ - syncdst
 
-### Chia config
+### Environment config
 
 This contains the environment config. This includes the path to the
-chia-blockchain source, as well as ploting and remote sync configurations.
+chia-blockchain source, as well as plotting and remote sync configurations.
 
-#### Format
-    
-    chia_source: path to the directory containing the chia-blockchain source
-    chia_plotters: path to the plotter config file
-    chia_sync: path to the plotter remote sync config file
 
 ### Plotter config
 
@@ -31,39 +29,26 @@ The plotter config contains a list of CSV entries in the following format.
 
 ### Sync config
 
-This contains the list of output directories to be sync'd remotely. This is
-typically used if the output directory of the plot has limited space. These
-plots will be copied remotedly, verified, then removed from the local output
-directory.
+The sync config is simple. It's a CSV with two columns. Source directory,
+and destination directory. The source is the directory that contains the plots to be sync'd.
+The destination is the IP of another machine that has ezplot installed. For each plot,
+we ssh to the target machine, use `ezplot plotdst` to select the best destination for the
+plot, and we then rsync that file to the remote machine.
 
-#### Format
+#### format
 
-The sync config contains a list of CSV entries in the following format
+    <local_plot_dir>,<remote_ip>
 
-    <local_dir>,<remote_location>,<ssh_key_path(default:~/.ssh/id_rsa)>,<ssh_user(default:1000)>
+## Gettings started
 
-    ex: This would backup /mnt/disk/disk0/farm to the server 10.0.0.1 into the
-      directory /mnt/disk/disk32/farm using the ssh key ~/.ssh/some_rsa and the
-      username farmer.
-    
-    /mnt/disk/disk0/farm,10.0.0.1:/mnt/disk/disk32/farm,~/.ssh/some_rsa,farmer
+If you just run ezplot with no args it will print the list of commands. But basically,
+you just set your config files at ~/.local/opt/chia/config/, and use
 
-## Scripts.
+    ezplot start
 
-#### startplot
- Starts all the plots listed in the plotter config as well as the io monitor and the plot sync
+To start plotting, and then
 
-#### stopplot 
- Stops all the plots listed in the plotter config. Does not stop the plot sync or the io monitor
+    ezplot stop
 
-#### stopsync
- Stops remote plot sync
-
-#### stopmonitor
- Stops monitoring io stats
-
-#### stopall 
- runs stopplot stopsync and stopmonitor
-
-
-
+To stop plotting. Note that you need to manually stop the monitoring, sync'ing,
+and rebalancing tmux sessions as those don't get stopped automatically.

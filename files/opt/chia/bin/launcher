@@ -22,7 +22,8 @@ actions = {
     "monitor": sh[f"{CHIA_HOME}/bin/monitorplots"],
     "sync": sh[f"{CHIA_HOME}/bin/syncplots"],
     "uploadplots": sh[f"{CHIA_HOME}/bin/uploadplots"],
-    "rebalance": sh[f"{CHIA_HOME}/bin/rebalance"]
+    "rebalance": sh[f"{CHIA_HOME}/bin/rebalance"],
+    "duplicates": sh[f"{CHIA_HOME}/bin/duplicates"]
 }
 
 descriptions = {
@@ -40,7 +41,8 @@ descriptions = {
     "monitor": "Starts the plot count monitor.",
     "sync": "Syncs the locally generated plots to the configured remote location.",
     "uploadplots": "Used by sync",
-    "rebalance": "Starts a rebalancer that continuously moves plots if the difference in balance between drives exceeds N percent."
+    "rebalance": "Starts a rebalancer that continuously moves plots if the difference in balance between drives exceeds N percent.",
+    "duplicates": "Lists plots that have duplicate files."
 }
 
 def main():
