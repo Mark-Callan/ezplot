@@ -23,6 +23,7 @@ actions = {
     "sync": sh[f"{CHIA_HOME}/bin/syncplots"],
     "uploadplots": sh[f"{CHIA_HOME}/bin/uploadplots"],
     "rebalance": sh[f"{CHIA_HOME}/bin/rebalance"],
+    "rebalancer": sh[f"{CHIA_HOME}/bin/rebalancer"],
     "duplicates": sh[f"{CHIA_HOME}/bin/duplicates"]
 }
 
@@ -42,6 +43,7 @@ descriptions = {
     "sync": "Syncs the locally generated plots to the configured remote location.",
     "uploadplots": "Used by sync",
     "rebalance": "Starts a rebalancer that continuously moves plots if the difference in balance between drives exceeds N percent.",
+    "rebalancer": "Runs rebalance in a tmux session continuously.",
     "duplicates": "Lists plots that have duplicate files."
 }
 
