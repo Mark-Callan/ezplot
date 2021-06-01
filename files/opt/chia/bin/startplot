@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for plotter in `cat $HOME/mining/plotters`; do
+for plotter in `cat ${CHIA_PLOTTERS}`; do
   plot_name=`echo ${plotter} | cut -d',' -f1`
   plot_tmp=`echo ${plotter} | cut -d',' -f2`
   plot_dst=`echo ${plotter} | cut -d',' -f3`
