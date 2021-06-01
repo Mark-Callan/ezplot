@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
-sync_src=${1:?"ERROR: A local sync source location must be provided."}
+sync_src=${1:?"ERROR: First positional arg, sync source directory is required."}
+sync_dst=${2:?"ERROR: Second positional arg, sync destionation IP is required."}
 
 while [ 0 ]; do
-  for dst in `cat ${CHIA_SYNCDST}`; do
-    set +e
-    echo "[`date`] Backing up ${sync_src} to ${dst}"
-    ezplot uploadplots ${sync_src} ${dst} || (echo "Sync existed with a non-zero exit code $?" ; sleep 10)
-    set -e
-  done
+
+  set +e
+  echo "[`date`] Backing up ${sync_src} to ${sync_dst}"
+  ezplot uploadplots ${sync_src} ${sync_dst} || (echo "Sync existed with a non-zero exit code $?" ; sleep 10)
+  set -e
+
   echo "[`date`] Sleeping for 5m"
   sleep 300
 done

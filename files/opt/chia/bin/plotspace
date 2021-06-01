@@ -11,7 +11,9 @@ all = True if "--all" in argv or "-a" in argv else False
 syncsrc = True if "--syncsrc" in argv else False
 src_dirs = []
 if syncsrc:
-    src_dirs = sh['cat'][ENV["CHIA_SYNCSRC"]]().strip().split('\n')
+    sync_config = sh['cat'][ENV["CHIA_SYNC"]]().strip().split('\n')
+    src_drs = [sync.split(',')[0] for sync in sync_config]
+
 
 def convert_to_gb(space):
     if space.endswith('T'):
