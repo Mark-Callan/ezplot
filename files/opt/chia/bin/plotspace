@@ -12,7 +12,8 @@ syncsrc = True if "--syncsrc" in argv else False
 src_dirs = []
 if syncsrc:
     sync_config = sh['cat'][ENV["CHIA_SYNC"]]().strip().split('\n')
-    src_drs = [sync.split(',')[0] for sync in sync_config]
+    src_dirs = [sync.split(',')[0] for sync in sync_config]
+
 
 
 def convert_to_gb(space):
