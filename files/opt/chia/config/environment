@@ -2,5 +2,5 @@ export CHIA_CONFIG="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd
 export CHIA_HOME=`dirname ${CHIA_CONFIG}`
 export CHIA_LOGS=${CHIA_LOGS:-/var/log/chia}
 export CHIA_PLOTTERS=${CHIA_PLOTTERS:-${CHIA_HOME}/config/plotters}
-export CHIA_SYNC=${CHIA_SYNC:-${CHIA_HOME}/config/syn}
+export CHIA_SYNC=${CHIA_SYNC:-${CHIA_HOME}/config/sync}
 export CHIA_USER=${CHIA_USER:-`whoami`}
