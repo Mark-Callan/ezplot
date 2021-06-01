@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#!/usr/bin/env bash
-
 rm -f /tmp/duplicate_plots /tmp/all_plots
 touch /tmp/duplicate_plots /tmp/all_plots
 
@@ -23,8 +21,8 @@ for f in `cat /tmp/all_plots`; do
   index=`expr "${index}" + "1"`
 done
 
-echo "Found `cat /tmp/duplicate_plots | wc -l` plots with duplicates."
-for f in `cat /tmp/duplicate_plots`; do
+echo "Found `cat /tmp/duplicate_plots | uniq | wc -l` plots with duplicates."
+for f in `cat /tmp/duplicate_plots | uniq`; do
   file_name=`basename ${f}`
   echo "[${file_name}]"
   ls -l `sudo find /mnt/disk -name ${file_name}`
