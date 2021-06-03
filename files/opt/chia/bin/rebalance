@@ -9,7 +9,7 @@ while [ 0 ]; do
   least_percent=`echo ${least_space} | cut -d',' -f3 | sed -e 's,%,,g'`
   most_percent=`echo ${most_space} | cut -d',' -f3 | sed -e 's,%,,g'`
   diff_percent=`expr "${least_percent}" - "${most_percent}"`
-  if [[ ${diff_percent} -gt 7 ]]; then
+  if [[ ${diff_percent} -gt 5 ]]; then
     least_mnt=`echo ${least_space} | cut -d',' -f2`
     most_mnt=`echo ${most_space} | cut -d',' -f2`
     echo "[`date`] rebalancing: ${least_space} => ${most_space}"
