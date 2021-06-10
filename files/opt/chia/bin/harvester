@@ -16,4 +16,4 @@ fw_add_port 8447
 fw_add_port 8448
 fw_add_port 8559
 fw_reload
-ezplot chia start harvester
+ezplot chia start harvester -r
