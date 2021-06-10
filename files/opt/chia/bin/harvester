@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
 
 
+function fw_add_port () {
+  portnum=${1}
+  protocol=${2:-"tcp"}
+  sudo firewall-cmd --add-port=${portnum}/${protocol} --permanent 2>&1>>/dev/null || true
+}
+
+function fw_reload () {
+  sudo firewall-cmd --reload 2>&1>>/dev/null || true
+}
+
+fw_add_port 8444
+fw_add_port 8447
+fw_add_port 8448
+fw_add_port 8559
+fw_reload
 ezplot chia start harvester
