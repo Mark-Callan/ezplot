@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+
+ezplot chia start harvester
