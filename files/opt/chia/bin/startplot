@@ -2,7 +2,7 @@
 
 set +e
 
-if [ -f ${CHIA_PLOTTERS} ]; do
+if [[ -f "${CHIA_PLOTTERS}" ]]; do
   for plotter in `cat ${CHIA_PLOTTERS}`; do
     plot_name=`echo ${plotter} | cut -d',' -f1`
     plot_tmp=`echo ${plotter} | cut -d',' -f2`
