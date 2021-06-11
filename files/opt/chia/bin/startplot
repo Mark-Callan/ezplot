@@ -28,7 +28,7 @@ if [ -f ${CHIA_SYNC} ]; then
     sync_src=`echo $entry | cut -d',' -f1`
     sync_dst=`echo $entry | cut -d',' -f2`
     if [[ "${sync_dst}" != "" ]]; then
-      echo tmux new -s syncplots_${index} -d "ezplot sync ${sync_src} ${sync_dst}"
+      tmux new -s syncplots_${index} -d "ezplot sync ${sync_src} ${sync_dst}"
       index=`expr "${index}" + "1"`
     fi
   done
