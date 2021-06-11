@@ -1,25 +1,27 @@
 #!/usr/bin/env bash
 
-for plotter in `cat ${CHIA_PLOTTERS}`; do
-  plot_name=`echo ${plotter} | cut -d',' -f1`
-  plot_tmp=`echo ${plotter} | cut -d',' -f2`
-  plot_dst=`echo ${plotter} | cut -d',' -f3`
-  set +e
-  eval "tmux new -s ${plot_name} -d 'ezplot plot \"${plot_tmp}\" \"${plot_dst}\"'"
-  error_code=$?
-  set -e
-  if [[ "$error_code" != "0" ]]; then
-    echo "[ERROR] unexpected exit code for plot ${plot_name}: ${error_code}"
-  else
-    echo "[`date`] Started plot: ${plotter}"
-  fi
-done
-
 set +e
-echo "[`date`] Starting io monitor"
-tmux new -s monitorio -d 'ezplot io'
-echo "[`date`] Starting plot monitor"
-tmux new -s monitorplots -d 'ezplot monitor'
+
+if [ -f ${CHIA_PLOTTERS} ]; do
+  for plotter in `cat ${CHIA_PLOTTERS}`; do
+    plot_name=`echo ${plotter} | cut -d',' -f1`
+    plot_tmp=`echo ${plotter} | cut -d',' -f2`
+    plot_dst=`echo ${plotter} | cut -d',' -f3`
+    set +e
+    eval "tmux new -s ${plot_name} -d 'ezplot plot \"${plot_tmp}\" \"${plot_dst}\"'"
+    error_code=$?
+    set -e
+    if [[ "$error_code" != "0" ]]; then
+      echo "[ERROR] unexpected exit code for plot ${plot_name}: ${error_code}"
+    else
+      echo "[`date`] Started plot: ${plotter}"
+    fi
+  done
+  echo "[`date`] Starting io monitor"
+  tmux new -s monitorio -d 'ezplot io'
+  echo "[`date`] Starting plot monitor"
+  tmux new -s monitorplots -d 'ezplot monitor'
+fi
 
 if [ -f ${CHIA_SYNC} ]; then
   echo "[`date`] Starting plot sync"
