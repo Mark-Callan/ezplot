@@ -8,7 +8,6 @@ for plotter in `cat ${CHIA_PLOTTERS}`; do
   plot_dst=`echo ${plotter} | cut -d',' -f3`
   eval "tmux new -s ${plot_name} -d 'ezplot plot \"${plot_tmp}\" \"${plot_dst}\"'"
   error_code=$?
-  set -e
   if [[ "$error_code" != "0" ]]; then
     echo "[ERROR] unexpected exit code for plot ${plot_name}: ${error_code}"
   else
@@ -28,7 +27,7 @@ if [ -f ${CHIA_SYNC} ]; then
     sync_src=`echo $entry | cut -d',' -f1`
     sync_dst=`echo $entry | cut -d',' -f2`
     if [[ "${sync_dst}" != "" ]]; then
-      tmux new -s syncplots_${index} -d "ezplot sync ${sync_src} ${sync_dst}"
+      tmux new -s syncplots_${index} -d "ezplot sync ${sync_src} ${sync_dst}" || true
       index=`expr "${index}" + "1"`
     fi
   done
