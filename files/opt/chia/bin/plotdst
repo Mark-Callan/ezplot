@@ -8,7 +8,7 @@ if [[ ! -f "/tmp/ezplot/dsts" ]]; then
 fi
 
 if [[ `cat /tmp/ezplot/dsts | wc -l` == 0 ]]; then
-  ezplot plotspace --syncsrc > /tmp/ezplot/dsts
+  ezplot plotspace > /tmp/ezplot/dsts
 fi
 
 next=`cat /tmp/ezplot/dsts | tail -n 1`

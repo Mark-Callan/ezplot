@@ -10,9 +10,8 @@ all = True if "--all" in argv or "-a" in argv else False
 # If we want to list only the syncsrc dirs.
 syncsrc = True if "--syncsrc" in argv else False
 src_dirs = []
-if syncsrc:
-    sync_config = sh['cat'][ENV["CHIA_SYNC"]]().strip().split('\n')
-    src_dirs = [sync.split(',')[0] for sync in sync_config]
+sync_config = sh['cat'][ENV["CHIA_SYNC"]]().strip().split('\n')
+src_dirs = [sync.split(',')[0] for sync in sync_config]
 
 
 
@@ -41,11 +40,12 @@ def get_available_space():
         space_available = convert_to_gb(usage[3])
         percent_used = usage[4]
 
-        if syncsrc:
-            if len(list(filter(lambda f: f.rstrip("/farm") == mountpoint, src_dirs))) > 0:
-                results.append(f"{space_available},{mountpoint},{percent_used}")
-        elif all or (total_size > 400 and space_available > 110):
+
+        if len(list(filter(lambda f: f.rstrip("/farm") == mountpoint, src_dirs))) > 0 and space_available > 110:
             results.append(f"{space_available},{mountpoint},{percent_used}")
+        #
+        # elif all or (total_size > 400 and space_available > 110):
+        #     results.append(f"{space_available},{mountpoint},{percent_used}")
 
 
     return results
