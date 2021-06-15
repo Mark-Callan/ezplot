@@ -41,8 +41,9 @@ def get_available_space():
         percent_used = usage[4]
 
 
-        if len(list(filter(lambda f: f.rstrip("/farm") == mountpoint, src_dirs))) > 0 and space_available > 110:
-            results.append(f"{space_available},{mountpoint},{percent_used}")
+        if len(list(filter(lambda f: f.rstrip("/farm") == mountpoint, src_dirs))) > 0:
+            if syncsrc or space_available > 110:
+                results.append(f"{space_available},{mountpoint},{percent_used}")
         #
         # elif all or (total_size > 400 and space_available > 110):
         #     results.append(f"{space_available},{mountpoint},{percent_used}")
