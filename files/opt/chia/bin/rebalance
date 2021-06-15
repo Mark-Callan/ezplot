@@ -15,6 +15,6 @@ while [ 0 ]; do
     echo "[`date`] rebalancing: ${least_space} => ${most_space}"
     mv `find ${least_mnt}/farm -maxdepth 1 -type f -name "*.plot" | head -n 1` ${most_mnt}/farm/
   fi
-  echo "[`date`] Sleeping for 30 minutes"
-  sleep 1800
+  echo "[`date`] Sleeping for 5 minutes"
+  sleep 300
 done
