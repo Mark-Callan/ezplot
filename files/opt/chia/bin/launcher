@@ -25,7 +25,8 @@ actions = {
     "rebalance": sh[f"{CHIA_HOME}/bin/rebalance"],
     "rebalancer": sh[f"{CHIA_HOME}/bin/rebalancer"],
     "duplicates": sh[f"{CHIA_HOME}/bin/duplicates"],
-    "harvester": sh[f"{CHIA_HOME}/bin/harvester"]
+    "harvester": sh[f"{CHIA_HOME}/bin/harvester"],
+    "ppd": sh[f"{CHIA_HOME}/bin/plotspd"]
 }
 
 descriptions = {
@@ -46,7 +47,8 @@ descriptions = {
     "rebalance": "Starts a rebalancer that continuously moves plots if the difference in balance between drives exceeds N percent.",
     "rebalancer": "Runs rebalance in a tmux session continuously.",
     "duplicates": "Lists plots that have duplicate files.",
-    "harvester": "Starts the chia harvester service daemon."
+    "harvester": "Starts the chia harvester service daemon.",
+    "ppd": "Prints information about the number of plots per day based on plots found in the directories listed in the chia config.yaml"
 }
 
 def main():

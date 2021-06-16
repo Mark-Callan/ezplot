@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+from os.path import exists
+from plumbum import local as sh
+import yaml
+from multiprocessing import Pool
+
+from os import environ
+
+HOME = environ["HOME"]
+CONFIG_FILE = f"{HOME}/.chia/mainnet/config/config.yaml"
+
+def load_config():
+    with open(CONFIG_FILE, 'r') as fd:
+        return yaml.safe_load(fd)
+
+def find_plots(paths, search="*.plot"):
+    all_plots = []
+    for path in paths:
+        if exists(path):
+            result = sh['sudo']['find'][path]['-type']['f']['-name'][search]().strip()
+            plots = result.split('\n')
+            if len(plots) > 0:
+                all_plots.extend(plots)
+    return all_plots
+
+def get_distinct_plot_dates(paths):
+    file_names = [p.split('/')[-1:] for p in paths]
+    date_list = [p.split('-')[2:5] for p in paths]
+    distinct_dates = []
+    for date in date_list:
+        if date not in distinct_dates:
+            distinct_dates.append(date)
+    return distinct_dates
+
+def main():
+    cfg = load_config()
+    plot_paths = cfg['harvester']['plot_directories']
+    all_plots = find_plots(plot_paths)
+    dates = get_distinct_plot_dates(all_plots)
+    total_plots = len(all_plots)
+    for date in dates:
+        date_str = '-'.join(date)
+        plots = find_plots(plot_paths, search=f"*{date_str}*.plot")
+        print(f"{date_str}: {len(plots)}")
+    print(f'total:      {total_plots}')
+    print(f'avg:        {total_plots/len(dates)} plots/day')
+
+
+if __name__ == "__main__":
+    main()
+
