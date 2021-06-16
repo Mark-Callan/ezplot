@@ -15,9 +15,9 @@ def load_config():
 
 PLOT_PATHS = cfg['harvester']['plot_directories']
 
-def find_plots(paths, search="*.plot"):
+def find_plots(search="*.plot"):
     all_plots = []
-    for path in paths:
+    for path in PLOT_PATHS:
         if exists(path):
             result = sh['sudo']['find'][path]['-type']['f']['-name'][search]().strip()
             plots = result.split('\n')
@@ -36,13 +36,12 @@ def get_distinct_plot_dates(paths):
 
 def get_plots_from_date(date):
     date_str = '-'.join(date)
-    plots = find_plots(plot_paths, search=f"*{date_str}*.plot")
+    plots = find_plots(PLOT_PATHS, search=f"*{date_str}*.plot")
     return (date_str, len(plots),)
 
 def main():
     cfg = load_config()
-    plot_paths = PLOT_PATHS
-    all_plots = find_plots(plot_paths)
+    all_plots = find_plots()
     dates = get_distinct_plot_dates(all_plots)
     total_plots = len(all_plots)
     pool = Pool(len(dates))
