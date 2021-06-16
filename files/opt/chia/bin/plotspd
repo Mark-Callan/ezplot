@@ -32,20 +32,24 @@ def get_distinct_plot_dates(paths):
             distinct_dates.append(date)
     return distinct_dates
 
+def get_plots_from_date(date):
+    date_str = '-'.join(date)
+    plots = find_plots(plot_paths, search=f"*{date_str}*.plot")
+    return (date_str, len(plots),)
+
 def main():
     cfg = load_config()
     plot_paths = cfg['harvester']['plot_directories']
     all_plots = find_plots(plot_paths)
     dates = get_distinct_plot_dates(all_plots)
     total_plots = len(all_plots)
-    for date in dates:
-        date_str = '-'.join(date)
-        plots = find_plots(plot_paths, search=f"*{date_str}*.plot")
-        print(f"{date_str}: {len(plots)}")
+    pool = Pool(len(dates))
+    results = pool.map(get_plots_from_date, dates)
+    for result in results:
+        print(f"{result[0]}: {result[1]}")
     print(f'total:      {total_plots}')
     print(f'avg:        {total_plots/len(dates)} plots/day')
 
 
 if __name__ == "__main__":
     main()
-
