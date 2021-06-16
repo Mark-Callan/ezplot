@@ -12,9 +12,8 @@ CONFIG_FILE = f"{HOME}/.chia/mainnet/config/config.yaml"
 def load_config():
     with open(CONFIG_FILE, 'r') as fd:
         return yaml.safe_load(fd)
-        
-CONFIG = load_config()
-PLOT_PATHS = cfg['harvester']['plot_directories']
+
+PLOT_PATHS = load_config()['harvester']['plot_directories']
 
 def find_plots(search="*.plot"):
     all_plots = []
@@ -41,7 +40,6 @@ def get_plots_from_date(date):
     return (date_str, len(plots),)
 
 def main():
-
     all_plots = find_plots()
     dates = get_distinct_plot_dates(all_plots)
     total_plots = len(all_plots)
