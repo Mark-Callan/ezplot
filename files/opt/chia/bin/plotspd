@@ -46,9 +46,9 @@ def main():
     pool = Pool(len(dates))
     results = pool.map(get_plots_from_date, dates)
     results.sort()
-    print("| date    | plots generated ")
+    print("| date       | plots generated ")
     for result in results:
-        print(f"{result[0]}: {result[1]}")
+        print(f"| {result[0]} | {result[1]} ")
     print(f'total:      {total_plots}')
     print(f'avg:        {total_plots/len(dates)} plots/day')
 
