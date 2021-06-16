@@ -49,8 +49,8 @@ def main():
     print("| date       | plots generated ")
     for result in results:
         print(f"| {result[0]} | {result[1]} ")
-    print(f'  total:  {total_plots}')
-    print(f'  avg:    {total_plots/len(dates)} plots/day')
+    print(f' - total: {total_plots}')
+    print(f' - avg:   {total_plots/len(dates)} plots/day')
 
 
 if __name__ == "__main__":
