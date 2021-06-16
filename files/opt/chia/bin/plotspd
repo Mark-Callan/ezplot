@@ -36,7 +36,7 @@ def get_distinct_plot_dates(paths):
 
 def get_plots_from_date(date):
     date_str = '-'.join(date)
-    plots = find_plots(PLOT_PATHS, search=f"*{date_str}*.plot")
+    plots = find_plots(search=f"*{date_str}*.plot")
     return (date_str, len(plots),)
 
 def main():
