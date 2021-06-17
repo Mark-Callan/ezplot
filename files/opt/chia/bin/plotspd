@@ -52,8 +52,7 @@ def main():
     for date, path in completed_dates:
         if date not in dates:
             dates[date] = []
-        else:
-            dates[date].append(path)
+        dates[date].append(path)
     keys = [k for k in dates]
     keys.sort()
     print("| date       | plots generated ")
