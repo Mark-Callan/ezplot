@@ -25,6 +25,11 @@ def find_plots(search="*.plot"):
                 all_plots.extend(plots)
     return all_plots
 
+def get_plot_completed_date(path):
+    lscmd = sh['ls']['-l']['--time-style=long-iso'][path]
+    awkcmd = sh['awk']['{print $6}']
+    return ((lscmd | awkcmd)().strip(), path,)
+
 def get_distinct_plot_dates(paths):
     file_names = [p.split('/')[-1:] for p in paths]
     date_list = [p.split('-')[2:5] for p in paths]
@@ -41,16 +46,30 @@ def get_plots_from_date(date):
 
 def main():
     all_plots = find_plots()
-    dates = get_distinct_plot_dates(all_plots)
-    total_plots = len(all_plots)
-    pool = Pool(len(dates))
-    results = pool.map(get_plots_from_date, dates)
-    results.sort()
+    pool = Pool(32)
+    completed_dates = pool.map(get_plot_completed_date, all_plots)
+    dates = { }
+    for date, path in completed_dates:
+        if date not in dates:
+            dates[date] = []
+        else:
+            dates[date].append(path)
+    keys = [k for k in dates]
+    keys.sort()
     print("| date       | plots generated ")
-    for result in results:
-        print(f"| {result[0]} | {result[1]} ")
+    for k in keys:
+        print(f"| {k} | {len(dates[k])} ")
+
+    # dates = get_distinct_plot_dates(all_plots)
+    # total_plots = len(all_plots)
+    # pool = Pool(len(dates))
+    # results = pool.map(get_plots_from_date, dates)
+    # results.sort()
+    # print("| date       | plots generated ")
+    # for result in results:
+    #     print(f"| {result[0]} | {result[1]} ")
     print(f' - total: {total_plots}')
-    print(f' - avg:   {total_plots/len(dates)} plots/day')
+    print(f' - avg:   {total_plots/len(all_plots)} plots/day')
 
 
 if __name__ == "__main__":
