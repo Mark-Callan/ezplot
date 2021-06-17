@@ -23,7 +23,7 @@ def find_plots(search="*.plot"):
             plots = result.split('\n')
             if len(plots) > 0:
                 all_plots.extend(plots)
-    return all_plots
+    return list(filter(lambda p: len(p.strip()) > 0, all_plots))
 
 def get_plot_completed_date(path):
     lscmd = sh['ls']['-l']['--time-style=long-iso'][path]
@@ -49,7 +49,9 @@ def main():
     if len(all_plots) == 0:
         print("Not plots found.")
         exit(0)
-        
+    else:
+        print(f"Found {len(all_plots)} plots total.")
+
     pool = Pool(32)
     completed_dates = pool.map(get_plot_completed_date, all_plots)
     dates = { }
