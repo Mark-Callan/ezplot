@@ -46,6 +46,10 @@ def get_plots_from_date(date):
 
 def main():
     all_plots = find_plots()
+    if len(all_plots) == 0:
+        print("Not plots found.")
+        exit(0)
+        
     pool = Pool(32)
     completed_dates = pool.map(get_plot_completed_date, all_plots)
     dates = { }
