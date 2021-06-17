@@ -47,12 +47,10 @@ def get_plots_from_date(date):
 def main():
     all_plots = find_plots()
     if len(all_plots) == 0:
-        print("Not plots found.")
+        print('No plots found')
         exit(0)
-    else:
-        print(f"Found {len(all_plots)} plots total.")
 
-    pool = Pool(32)
+    pool = Pool(40)
     completed_dates = pool.map(get_plot_completed_date, all_plots)
     dates = { }
     for date, path in completed_dates:
@@ -65,14 +63,6 @@ def main():
     for k in keys:
         print(f"| {k} | {len(dates[k])} ")
 
-    # dates = get_distinct_plot_dates(all_plots)
-    # total_plots = len(all_plots)
-    # pool = Pool(len(dates))
-    # results = pool.map(get_plots_from_date, dates)
-    # results.sort()
-    # print("| date       | plots generated ")
-    # for result in results:
-    #     print(f"| {result[0]} | {result[1]} ")
     print(f' - total: {len(all_plots)}')
     print(f' - avg:   {len(all_plots)/len(keys)} plots/day')
 
