@@ -16,7 +16,7 @@ actions = {
     "plotdst": sh[f"{CHIA_HOME}/bin/plotdst"],
     "plot": sh[f"{CHIA_HOME}/bin/plot"],
     "chia": sh[f"{CHIA_HOME}/bin/chia"],
-    "chia-gui": sh[f"{CHIA_HOME}/bin/chia"],
+    "chia-gui": sh[f"{CHIA_HOME}/bin/chia-gui"],
     "logs": sh[f"{CHIA_HOME}/bin/tmlogs"],
     "env": (sh['env'] | sh['grep']['CHIA_']),
     "monitor": sh[f"{CHIA_HOME}/bin/monitorplots"],

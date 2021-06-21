@@ -2,8 +2,8 @@
 
 function start () {
   exit_code=0
-  pushd $HOME/source/chia-blockchain/chia-blockchain-gui >>/dev/null
-     
+  pushd $HOME/.local/opt/chia/source/chia-blockchain/chia-blockchain-gui >>/dev/null
+
     set +e
     . ../activate
     npm run electron . 2> ${HOME}/.local/var/log/chia/gui.error.log 1> ${HOME}/.local/var/log/chia/gui.log
@@ -19,5 +19,4 @@ function start () {
 }
 mkdir -p $HOME/.local/var/log/chia
 
-start & 
-
+start &
