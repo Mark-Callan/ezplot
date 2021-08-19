@@ -8,10 +8,10 @@ MASTER2="10.0.0.31"
 
 for h in $hosts; do
 
-  ssh $h "cd source/ezplot ; git pull; make install"
+  ssh $h "cd source/ezplot ; git pull; make install ;"
 
   if [[ "$h" == "${MASTER1}" || "$h" == "${MASTER2}" ]]; then
-    make service
+    ssh $h "cd source/ezplot ; make service ;"
   fi
 
 done
