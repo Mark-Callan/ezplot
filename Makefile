@@ -17,7 +17,7 @@ config:
 	cp $(shell find ./config -type f) ~/.local/opt/chia/config/
 
 service:
-	sudo cp ./files/usr/lib/systemd/user/ezplot.service /usr/lib/systemd/user/ezplot.service
+	sudo cp ./files/usr/lib/systemd/ezplot.service /usr/lib/systemd/ezplot.service
 	sudo systemctl daemon-reload
 	sudo systemctl enable ezplot.service
 	sudo systemctl start ezplot.service
