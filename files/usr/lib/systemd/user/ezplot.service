@@ -2,14 +2,14 @@
 Description=EZ Plot management service.
 Documentation=Not likely.
 After=network.target
+Wants=network.target
 
 [Service]
-Type=service
-ExecStart=sudo -u ${CHIA_USERNAME} /opt/chia/bin/ezplot start
-#ExecReload=sudo -u ${CHIA_USERNAME} /opt/chia/bin/ezplot stop
-Restart=always
-StartLimitBurst=1
-StartLimitInterval=10m
+Type=oneshot
+User=root
+RemainAfterExit=yes
+ExecStart=sudo -u mark /opt/chia/bin/ezplot chia start all
+TimeoutStartSec=120
 
 [Install]
 WantedBy=multi-user.target
