@@ -18,6 +18,6 @@ config:
 
 service:
 	sudo cp ./files/usr/lib/systemd/user/ezplot.service /usr/lib/systemd/user/ezplot.service
-	sudo sysctl daemon-reload
+	sudo systemctl daemon-reload
 	sudo systemctl enable ezplot.service
 	sudo systemctl start ezplot.service
